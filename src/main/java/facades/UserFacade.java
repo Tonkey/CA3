@@ -46,4 +46,16 @@ public class UserFacade implements IUserFacade {
     }
   }
 
+    @Override
+    public void createNewUser(IUser u) {
+        EntityManager em = getEntityManager();
+        try{
+            em.persist(u);
+        } catch(Exception e){
+            //some exception
+        } finally{
+            em.close();
+        }
+    }
+
 }

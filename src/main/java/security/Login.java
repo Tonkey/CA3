@@ -32,6 +32,7 @@ public class Login {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("login")
   public Response login(String jsonString) throws JOSEException {
     try {
       JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
@@ -88,5 +89,17 @@ public class Login {
     SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
     signedJWT.sign(signer);
     return signedJWT.serialize();
+  }
+  
+  
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("createUser")
+  public void createUser(String content){
+      IUserFacade facade = UserFacadeFactory.getInstance();
+      IUser u = new Gson().fromJson(content, IUser.class);
+      
+      facade.createNewUser(u);
   }
 }
