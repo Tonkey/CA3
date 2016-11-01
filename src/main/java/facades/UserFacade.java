@@ -1,5 +1,6 @@
 package facades;
 
+import entity.Role;
 import security.IUserFacade;
 import entity.User;
 import java.util.List;
@@ -47,12 +48,20 @@ public class UserFacade implements IUserFacade {
   }
 
     @Override
-    public void createNewUser(IUser u) {
+    public String createNewUser(User u) {
         EntityManager em = getEntityManager();
         try{
+            Role userRole = new Role("User");
+            u.addRole(userRole);
+            //hashes the password as the Gson rest bypasses the constructor!
+            u.setPassword(u.getPassword());
+            em.getTransaction().begin();
             em.persist(u);
+            em.getTransaction().commit();
+            return u.getUserName();
         } catch(Exception e){
-            //some exception
+            e.printStackTrace();
+            return null;
         } finally{
             em.close();
         }

@@ -3,11 +3,9 @@ package security;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.*;
-import facades.UserFacade;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +17,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import entity.User;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Path("login")
 public class Login {
@@ -32,7 +34,6 @@ public class Login {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("login")
   public Response login(String jsonString) throws JOSEException {
     try {
       JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
@@ -91,15 +92,19 @@ public class Login {
     return signedJWT.serialize();
   }
   
-  
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("createUser")
-  public void createUser(String content){
+  public Response createUser(String data){
       IUserFacade facade = UserFacadeFactory.getInstance();
-      IUser u = new Gson().fromJson(content, IUser.class);
+      //password not hashed here as it uses empty constructor!
+      User u = new Gson().fromJson(data, User.class);
       
       facade.createNewUser(u);
+      
+      String temp = "#/view1";
+      return Response.status(201).header("Location", temp).build();
   }
+  
 }
