@@ -10,6 +10,13 @@ angular.module('myApp.view5', ['ngRoute'])
   });
 }])
 
-        .controller('View5Ctrl', function(){
-            
+   .controller('View5Ctrl', function($http,$scope) {
+  $http.get('api/demoadmin')
+            .success(function (data, status, headers, config) {
+              $scope.data = data;
+            })
+            .error(function (data, status, headers, config) {
+              
+             });
+ 
 });
