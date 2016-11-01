@@ -16,12 +16,12 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.factories',
   'myApp.services'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]).
-config(function ($httpProvider) {
-   $httpProvider.interceptors.push('AuthInterceptor');
-});
-
-
+]).config(['$routeProvider', '$sceDelegateProvider', '$httpProvider', function($routeProvider, $sceDelegateProvider, $httpProvider) {
+  
+    $routeProvider.otherwise({redirectTo: '/view1'});
+  
+    $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://cvrapi.dk/**']);
+  
+    $httpProvider.interceptors.push('AuthInterceptor');
+    
+}]);
