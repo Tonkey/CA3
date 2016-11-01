@@ -1,4 +1,4 @@
-'use strcit';
+'use strict';
 
 angular.module('myApp.view5', ['ngRoute'])
 
