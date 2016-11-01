@@ -18,15 +18,14 @@ angular.module('myApp.services', [])
 
                     $http({
                         method: 'GET',
-                        params : {
-                            "search" : searchString,
-                            "country" : "DK"
+                        params: {
+                            "search": searchString,
+                            "country": "DK"
                         },
                         url: "http://cvrapi.dk/api",
-                        skipAuthorization : true
+                        skipAuthorization: true
                     }).then(function successCallback(response) {
 
-console.log(response);
                         success(response.data);
 
                     }, function errorCallback(response) {
