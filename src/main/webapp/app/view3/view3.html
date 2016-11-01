@@ -3,50 +3,74 @@
     <p>Data from server (Admins only) <b style="color: darkblue">{{data.message}}</b></p>
     <p>Server Time: <b style="color: darkblue">{{data.serverTime}}</b></p>
 
-
     <input data-ng-model="searchField" class="form-control input-sm"><br>
 
     <button data-ng-disabled="loading" data-ng-click="searchCVR()" class="btn btn-default">Search</button>
-
-
+    <br>
+    <br>
     <uib-accordion close-others="true"> 
-
-        {{result}}
+        <!--{{result}}-->
         <div data-ng-repeat="unit in result.productionunits" uib-accordion-group class="panel-default" heading="Production Unit {{::$index + 1}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
             <table>
                 <tr>
-                    <th>CVR number</th>
-                    <td>
+                    <th style="padding-bottom: 5px;">CVR number</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
                         {{::result.vat}}
                     </td>
                 </tr>
                 <tr>
-                    <th>Company name</th>
-                    <td>
+                    <th style="padding-bottom: 5px;">Company name</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
                         {{::unit.name}}
                     </td>
                 </tr>
+                <tr>
+                    <th style="padding-bottom: 5px;">Company type</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
+                        {{::result.companydesc}}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="padding-bottom: 5px;">Industry type</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
+                        {{::result.industrydesc}}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="padding-bottom: 5px;">Company Owners</th>
+                    <!--<td style="padding-left: 15px; font-family: italic">-->              
+                    <td data-ng-repeat="owners in result.owners" style="padding-bottom: 5px; padding-left: 20px; font-family: italic">              
+                <!--<li style="list-style-type: none; margin-left: 0;" data-ng-repeat="owners in result.owners">-->
+                    {{::owners.name}}
+                <!--</li>-->
+                </td>
+                </tr>
                 <tr ng-show="unit.addressco !== null">
-                    <th>Address</th>
-                    <td>
+                    <th style="padding-bottom: 5px;">Address</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
                         C/O {{::unit.addressco}}
                     </td>                 
                 </tr>
                 <tr>
-                    <th ng-show="unit.addressco === null">Address</th>
-                    <th ng-show="unit.addressco !== null"></th>
-                    <td>
+                    <th style="padding-bottom: 5px;" ng-show="unit.addressco === null">Address</th>
+                    <th style="padding-bottom: 5px;" ng-show="unit.addressco !== null"></th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
                         {{::unit.address}}
                     </td>             
-                    <td>
-                        {{::unit.zipcode , unit.city , unit.cityname }} 
-                    </td>
-                 
                 </tr>
-              
+                <tr>
+                    <th style="padding-bottom: 5px;"></th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
+                        {{::unit.zipcode}} , {{::unit.city}} <span ng-show="unit.cityname !== null">, {{::unit.cityname}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="padding-bottom: 5px;">Starting date</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
+                        {{::unit.startdate}}
+                    </td>
+                </tr>
             </table>
-
-            <!--{"vat":25094549,"name":"NYX ApS","address":"Nederbyv\u00e6nget 318","zipcode":"6100","city":"Haderslev","cityname":"Aastrup","protected":false,"phone":null,"email":null,"fax":null,"startdate":"15\/12 - 1999","enddate":null,"employees":null,"addressco":"Flemming Andersen","industrycode":999999,"industrydesc":"Uoplyst","companycode":80,"companydesc":"Anpartsselskab","creditstartdate":null,"creditbankrupt":false,"creditstatus":null,"owners":[{"name":"Preben Fogtmann"},{"name":"Flemming Andersen"}],"productionunits":[{"pno":1007301193,"main":true,"name":"NYX ApS","address":"Nederbyv\u00e6nget 318","zipcode":"6100","city":"Haderslev","cityname":"Aastrup","protected":false,"phone":null,"email":null,"fax":null,"startdate":"15\/12 - 1999","enddate":null,"employees":null,"addressco":"Flemming Andersen","industrycode":999999,"industrydesc":"Uoplyst"}],"t":100,"version":6}-->
         </div>
     </uib-accordion>
 
