@@ -10,14 +10,46 @@
 
 
     <uib-accordion close-others="true"> 
-        
+
         {{result}}
-      
-        <div data-ng-repeat="unit in result.productionunits" uib-accordion-group class="panel-default" heading="Production Unit {{::$index+1}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-            {{::unit.name}}
+        <div data-ng-repeat="unit in result.productionunits" uib-accordion-group class="panel-default" heading="Production Unit {{::$index + 1}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+            <table>
+                <tr>
+                    <th>CVR number</th>
+                    <td>
+                        {{::result.vat}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Company name</th>
+                    <td>
+                        {{::unit.name}}
+                    </td>
+                </tr>
+                <tr ng-show="unit.addressco !== null">
+                    <th>Address</th>
+                    <td>
+                        C/O {{::unit.addressco}}
+                    </td>                 
+                </tr>
+                <tr>
+                    <th ng-show="unit.addressco === null">Address</th>
+                    <th ng-show="unit.addressco !== null"></th>
+                    <td>
+                        {{::unit.address}}
+                    </td>             
+                    <td>
+                        {{::unit.zipcode , unit.city , unit.cityname }} 
+                    </td>
+                 
+                </tr>
+              
+            </table>
+
+            <!--{"vat":25094549,"name":"NYX ApS","address":"Nederbyv\u00e6nget 318","zipcode":"6100","city":"Haderslev","cityname":"Aastrup","protected":false,"phone":null,"email":null,"fax":null,"startdate":"15\/12 - 1999","enddate":null,"employees":null,"addressco":"Flemming Andersen","industrycode":999999,"industrydesc":"Uoplyst","companycode":80,"companydesc":"Anpartsselskab","creditstartdate":null,"creditbankrupt":false,"creditstatus":null,"owners":[{"name":"Preben Fogtmann"},{"name":"Flemming Andersen"}],"productionunits":[{"pno":1007301193,"main":true,"name":"NYX ApS","address":"Nederbyv\u00e6nget 318","zipcode":"6100","city":"Haderslev","cityname":"Aastrup","protected":false,"phone":null,"email":null,"fax":null,"startdate":"15\/12 - 1999","enddate":null,"employees":null,"addressco":"Flemming Andersen","industrycode":999999,"industrydesc":"Uoplyst"}],"t":100,"version":6}-->
         </div>
     </uib-accordion>
-    
+
     <div class="text-danger" data-ng-if="error">{{error}}</div>
-    
+
 </div>

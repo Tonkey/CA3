@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Role</class>
     <class>entity.User</class>
+    <class>entity.CurrencyRates</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.canonicalmodel.subpackage" value="development"/>
@@ -15,4 +16,3 @@
     </properties>
   </persistence-unit>
 </persistence>
-    
