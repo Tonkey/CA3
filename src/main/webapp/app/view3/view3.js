@@ -12,7 +12,9 @@ angular.module('myApp.view3', ['ngRoute'])
         .controller('View3Ctrl', function ($http, $scope, CVRService) {
 
             $scope.searchField = "search";
-    
+
+            $scope.country = "DK";
+
             $scope.loading = false;
 
             $http.get('api/demouser')
@@ -26,7 +28,7 @@ angular.module('myApp.view3', ['ngRoute'])
             $scope.result = null;
 
             $scope.searchCVR = function () {
-                
+
                 $scope.loading = true;
                 $scope.error = null;
                 $scope.result = null;
@@ -39,21 +41,21 @@ angular.module('myApp.view3', ['ngRoute'])
                 };
 
                 var failure = function (response) {
-                    
+
                     if (response.status === 404) {
-                        
+
                         $scope.error = "No results";
-                        
+
                     } else {
-                        
+
                         $scope.error = "Unknown API error.";
                     }
-                    
+
                     $scope.loading = false;
 
                 };
 
-                $scope.result = CVRService.search($scope.searchField, success, failure);
+                $scope.result = CVRService.search($scope.searchField, $scope.country, success, failure);
             }
 
 

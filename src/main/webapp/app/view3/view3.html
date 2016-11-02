@@ -3,7 +3,17 @@
     <p>Data from server (Admins only) <b style="color: darkblue">{{data.message}}</b></p>
     <p>Server Time: <b style="color: darkblue">{{data.serverTime}}</b></p>
 
-    <input data-ng-model="searchField" class="form-control input-sm"><br>
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <input data-ng-model="searchField" class="form-control">
+            <span class="input-group-addon">
+                <select class="form-control" data-ng-model="country">
+                    <Option value="DK" selected>Denmark</Option>
+                    <Option value="NO">Norway</Option>
+                </select>
+            </span>
+        </div>
+    </div>
 
     <button data-ng-disabled="loading" data-ng-click="searchCVR()" class="btn btn-default">Search</button>
     <br>
@@ -38,12 +48,14 @@
                 </tr>
                 <tr>
                     <th style="padding-bottom: 5px;">Company Owners</th>
-                    <!--<td style="padding-left: 15px; font-family: italic">-->              
-                    <td data-ng-repeat="owners in result.owners" style="padding-bottom: 5px; padding-left: 20px; font-family: italic">              
-                <!--<li style="list-style-type: none; margin-left: 0;" data-ng-repeat="owners in result.owners">-->
-                    {{::owners.name}}
-                <!--</li>-->
-                </td>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">  
+
+                        <div data-ng-repeat="owners in result.owners">
+                            {{::owners.name}}<br>
+                        </div>
+                    </td>
+
+               
                 </tr>
                 <tr ng-show="unit.addressco !== null">
                     <th style="padding-bottom: 5px;">Address</th>
@@ -62,6 +74,12 @@
                     <th style="padding-bottom: 5px;"></th>
                     <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
                         {{::unit.zipcode}} , {{::unit.city}} <span ng-show="unit.cityname !== null">, {{::unit.cityname}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="padding-bottom: 5px;">Email</th>
+                    <td style="padding-bottom: 5px; padding-left: 20px; font-family: italic">
+                        <a href="#">{{::unit.email}}</a>
                     </td>
                 </tr>
                 <tr>
