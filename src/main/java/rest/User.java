@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import security.IUserFacade;
 import security.UserFacadeFactory;
 
-@Path("demouser")
+@Path("users")
 @RolesAllowed("User")
 public class User {
   

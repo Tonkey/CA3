@@ -6,16 +6,18 @@
 
     <input data-ng-model="searchField" class="form-control input-sm"><br>
 
-    <button data-ng-click="searchCVR()" class="btn btn-default">Search</button>
+    <button data-ng-disabled="loading" data-ng-click="searchCVR()" class="btn btn-default">Search</button>
 
 
     <uib-accordion close-others="true"> 
         
         {{result}}
       
-        <div data-ng-repeat="unit in result.productionunits" uib-accordion-group class="panel-default" heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+        <div data-ng-repeat="unit in result.productionunits" uib-accordion-group class="panel-default" heading="Production Unit {{::$index+1}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
             {{::unit.name}}
         </div>
     </uib-accordion>
+    
+    <div class="text-danger" data-ng-if="error">{{error}}</div>
     
 </div>

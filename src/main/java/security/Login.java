@@ -25,15 +25,10 @@ import java.util.logging.Logger;
 @Path("login")
 public class Login {
 
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public String gt() {
-    return "{\"txt\" : \"TEST\"}";
-  }
-
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("login")
   public Response login(String jsonString) throws JOSEException {
     try {
       JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();

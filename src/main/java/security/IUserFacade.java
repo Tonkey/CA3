@@ -23,4 +23,8 @@ public interface IUserFacade {
     
     String createNewUser(User u);
     
+    List<User> getAllUsers();
+    
+    boolean deleteUser(String id);
+    
 }
