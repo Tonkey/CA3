@@ -17,14 +17,6 @@ angular.module('myApp.view3', ['ngRoute'])
 
             $scope.loading = false;
 
-            $http.get('api/demouser')
-                    .success(function (data, status, headers, config) {
-                        $scope.data = data;
-                    })
-                    .error(function (data, status, headers, config) {
-
-                    });
-
             $scope.result = null;
 
             $scope.searchCVR = function () {

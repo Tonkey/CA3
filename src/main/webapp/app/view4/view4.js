@@ -8,12 +8,6 @@ angular.module('myApp.view4', ['ngRoute'])
                 });
             }])
         .controller('View4Ctrl', function ($http, $scope) {
-            $http.get('api/demouser')
-                    .success(function (data, status, headers, config) {
-                        $scope.data = data;
-                    })
-                    .error(function (data, status, headers, config) {
-
-                    });
+      
 
         });

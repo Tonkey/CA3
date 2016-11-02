@@ -11,13 +11,7 @@ angular.module('myApp.view5', ['ngRoute'])
             }])
 
         .controller('View5Ctrl', function ($http, $scope) {
-            $http.get('api/demoadmin/check')
-                    .success(function (data, status, headers, config) {
-                        $scope.data = data;
-                    })
-                    .error(function (data, status, headers, config) {
 
-                    });
             $http.get('api/users')
                     .success(function (data, status, headers, config) {
                         console.log(data);
