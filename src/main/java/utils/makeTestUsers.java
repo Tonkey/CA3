@@ -1,8 +1,10 @@
 package utils;
 
+import entity.CurrencyRates;
 import entity.Role;
 import entity.User;
 import facades.UserFacade;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -16,8 +18,11 @@ public class makeTestUsers {
         EntityManager em = Persistence.createEntityManagerFactory("pu_development").createEntityManager();
         try {
             System.out.println("Creating TEST Users");
+
+            em.getTransaction().begin();
+
             if (em.find(User.class, "user") == null) {
-                em.getTransaction().begin();
+
                 Role userRole = new Role("User");
                 Role adminRole = new Role("Admin");
                 User user = new User("user", "test");
@@ -27,14 +32,21 @@ public class makeTestUsers {
                 User both = new User("user_admin", "test");
                 both.addRole(userRole);
                 both.addRole(adminRole);
+
                 em.persist(userRole);
                 em.persist(adminRole);
                 em.persist(user);
                 em.persist(admin);
                 em.persist(both);
-                em.getTransaction().commit();
+
                 System.out.println("Created TEST Users");
             }
+
+//            CurrencyRates cr = new CurrencyRates(new Date(1478011533), "EUR", 100);
+            
+//            em.persist(cr);
+            em.getTransaction().commit();
+
         } catch (Exception ex) {
             Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
             em.getTransaction().rollback();

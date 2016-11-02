@@ -4,13 +4,13 @@
 angular.module('myApp.services', [])
         .service('CVRService', ['$http', function ($http) {
 
-                this.search = function (searchString, success, failure) {
+                this.search = function (searchString, country, success, failure) {
 
                     $http({
                         method: 'GET',
                         params: {
                             "search": searchString,
-                            "country": "DK"
+                            "country": country
                         },
                         url: "http://cvrapi.dk/api",
                         skipAuthorization: true
