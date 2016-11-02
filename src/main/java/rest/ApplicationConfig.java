@@ -23,9 +23,9 @@ public class ApplicationConfig extends Application {
   private void addRestResourceClasses(Set<Class<?>> resources) {
     resources.add(httpErrors.GenericExceptionMapper.class);
     resources.add(httpErrors.NotFoundExceptionMapper.class);
+    resources.add(rest.Login.class);
     resources.add(rest.Users.class);
     resources.add(security.JWTAuthenticationFilter.class);
-    resources.add(rest.Login.class);
     resources.add(security.NotAuthorizedExceptionMapper.class);
     resources.add(security.RolesAllowedFilter.class);
    

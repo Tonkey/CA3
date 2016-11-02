@@ -40,6 +40,7 @@ public class UserFacade implements IUserFacade {
      */
     @Override
     public List<String> authenticateUser(String userName, String password) {
+        
         IUser user = getUserByUserId(userName);
         try {
             return user != null && PasswordStorage.verifyPassword(password, user.getPassword()) ? user.getRolesAsStrings() : null;

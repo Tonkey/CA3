@@ -12,6 +12,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import facades.UserFacade;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Authenticator {
             res.append(string);
             res.append(",");
         }
-        String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
+        //String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
         String issuer = "semester3demo-cphbusiness.dk-computerScience";
         // Generate random 256-bit (32-byte) shared secret
         SecureRandom random = new SecureRandom();

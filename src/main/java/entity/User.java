@@ -21,12 +21,14 @@ public class User implements IUser, Serializable {
     List<Role> roles;
 
     public User() {
+        System.out.println("set password");
 //        System.out.println("inside empty constructor!");
     }
 
     public User(String userName, String password) throws PasswordStorage.CannotPerformOperationException {
         this.userName = userName;
         this.passwordHash = PasswordStorage.createHash(password);
+        System.out.println("set password");
     }
 
 //  public User(String userName, String passwordHash,List<String> roles) {
@@ -49,6 +51,7 @@ public class User implements IUser, Serializable {
     @Override
     public List<String> getRolesAsStrings() {
         if (roles.isEmpty()) {
+           
             return null;
         }
         List<String> rolesAsStrings = new ArrayList();
@@ -64,6 +67,7 @@ public class User implements IUser, Serializable {
     }
 
     public void setPassword(String password) throws PasswordStorage.CannotPerformOperationException {
+        System.out.println("set password");
         this.passwordHash = PasswordStorage.createHash(password);
     }
 
