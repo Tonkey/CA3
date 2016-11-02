@@ -2,13 +2,16 @@ package PeriodicalTasks;
 
 import entity.CurrencyDescription;
 import entity.CurrencyRates;
+import facades.CurrencyFacade;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import org.xml.sax.helpers.*;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +43,8 @@ public class ExchangeRates extends DefaultHandler implements Runnable {
 
     public void updateExchangeRates() {
 
+        CurrencyFacade currencyFacade = new CurrencyFacade();
+        
         try {
 
             URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
@@ -56,17 +61,21 @@ public class ExchangeRates extends DefaultHandler implements Runnable {
 //          xform.transform(new DOMSource(document), new StreamResult(System.out));
             NodeList currencyNodeList = document.getElementsByTagName("currency");
 
+            List<CurrencyRates> dailyCurrencies = new ArrayList<CurrencyRates>();
+            
             for (int i = 0, size = currencyNodeList.getLength(); i < size; i++) {
 
-                CurrencyRates dailyCurrencyRates = new CurrencyRates(new Date(),
+                dailyCurrencies.add(new CurrencyRates(new Date(),
                         new CurrencyDescription(currencyNodeList.item(i).getAttributes().getNamedItem("code").getNodeValue(),
                                 currencyNodeList.item(i).getAttributes().getNamedItem("desc").getNodeValue()),
-                        checkRate(currencyNodeList.item(i).getAttributes().getNamedItem("rate").getNodeValue()));
-
+                        checkRate(currencyNodeList.item(i).getAttributes().getNamedItem("rate").getNodeValue())));
+                
 //                System.out.println("currencyDescription is: " + dailyCurrencyRates.getCodeID());
 //                System.out.println("currencyDescription is: " + dailyCurrencyRates.getCode());
 //                System.out.println("currencyDescription is: " + dailyCurrencyRates.getRate());
             }
+            
+            
             System.out.println(new Date() + " - currency data is now updated ...");
 
         } catch (MalformedURLException MalURLex) {
