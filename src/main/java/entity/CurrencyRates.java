@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,7 +19,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "CURRENCY_RATES",
         indexes = {
-            @Index(name = "DATE", columnList = "DATE", unique = false)})
+            @Index(name = "CODE", columnList = "CODE", unique = false)})
 public class CurrencyRates implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,23 +29,24 @@ public class CurrencyRates implements Serializable {
     @Column(name = "DATE", nullable = false)
     private Date date;
     @Id
-    @Column(name = "CODE", nullable = false)
-    private String code;
+    @JoinColumn(name = "CODE", nullable = false)
+    @OneToOne
+    private CurrencyDescription code;
 
     @Column(name = "RATE", nullable = false)
     private double rate;
-    
-    @Column(name = "DESC" , nullable = false)
-    @OneToOne
-    private CurrencyDescription desc;
 
-    public CurrencyRates() {    
+//    @JoinColumn(name = "DESCRIPTION" , nullable = false)
+//    @OneToOne
+//    private CurrencyDescription desc;
+    public CurrencyRates() {
     }
 
-    public CurrencyRates(Date date, String code, double rate) {
+    public CurrencyRates(Date date, CurrencyDescription code, double rate) {
         this.date = date;
         this.code = code;
         this.rate = rate;
+//        this.desc = desc;
     }
 
     public Date getDate() {
@@ -52,10 +54,18 @@ public class CurrencyRates implements Serializable {
     }
 
     public String getCode() {
-        return code;
+        return code.getCurrencyDescription();
     }
 
-    public double getRates() {
+    public String getCodeID() {
+        return code.getId();
+    }
+
+    public double getRate() {
         return rate;
     }
+//
+//    public CurrencyDescription getDesc() {
+//        return desc;
+//    }
 }

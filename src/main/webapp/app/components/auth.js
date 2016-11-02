@@ -5,6 +5,25 @@ angular.module('myApp.security', [])
                 $scope.logout();
             });
 
+            $scope.login = function () {
+                $http.post('api/login', $scope.user)
+                        .success(function (data) {
+                            $window.sessionStorage.id_token = data.token;
+                            initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
+                            $location.path("#/view1");
+                        })
+                        .error(function (data) {
+                            delete $window.sessionStorage.id_token;
+                            clearUserDetails($scope);
+                        });
+            };
+
+            $rootScope.logout = function () {
+                clearUserDetails($scope);
+                delete $window.sessionStorage.id_token;
+                $location.path("/view1");
+            };
+
             $scope.$on("NotAuthenticatedEvent", function (event, res) {
                 $scope.$emit("logOutEvent");
 
@@ -30,21 +49,9 @@ angular.module('myApp.security', [])
                 }
             });
 
-            $scope.$on("HttpErrorEvent", function (event, res) {
+            $scope.$on("ServerErrorEvent", function (event, res) {
                 if (typeof res.data.error !== "undefined" && res.data.error.message) {
                     $scope.openErrorModal(res.data.error.message);
-                } else {
-
-                    $scope.openErrorModal("Unknown error during http request");
-
-                }
-            });
-            
-             $scope.$on("NotFoundEvent", function (event, res) {
-                if (typeof res.data.error !== "undefined" && res.data.error.message) {
-                    
-                    $scope.openErrorModal(res.data.error.message);
-                    
                 } else {
 
                     $scope.openErrorModal("Unknown error during http request");
@@ -54,28 +61,17 @@ angular.module('myApp.security', [])
 
             clearUserDetails($scope);
 
-            $scope.login = function () {
-                $http.post('api/login', $scope.user)
-                        .success(function (data) {
-                            $window.sessionStorage.id_token = data.token;
-                            initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
-                            $location.path("#/view1");
-                        })
-                        .error(function (data) {
-                            delete $window.sessionStorage.id_token;
-                            clearUserDetails($scope);
-                        });
+            //This sets the login data from session store if user pressed F5 (You are still logged in)
+            var init = function () {
+                var token = $window.sessionStorage.id_token;
+                if (token) {
+                    initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
+                }
             };
-
-            $rootScope.logout = function () {
-                $scope.isAuthenticated = false;
-                $scope.isAdmin = false;
-                $scope.isUser = false;
-                delete $window.sessionStorage.id_token;
-                $location.path("/view1");
-            };
+            init();// and fire it after definition
 
             $rootScope.openErrorModal = function (text) {
+
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: 'errorModal.html',
@@ -89,19 +85,12 @@ angular.module('myApp.security', [])
                 });
             };
 
-            //This sets the login data from session store if user pressed F5 (You are still logged in)
-            var init = function () {
-                var token = $window.sessionStorage.id_token;
-                if (token) {
-                    initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
-                }
-            };
-            init();// and fire it after definition
         })
         .factory('AuthInterceptor', function ($rootScope, $q) {
             return {
                 responseError: function (response) {
                     var name = "";
+                    
                     switch (response.status) {
                         case 401:
                             $rootScope.$broadcast("NotAuthenticatedEvent", response);
@@ -109,9 +98,12 @@ angular.module('myApp.security', [])
                         case 403:
                             $rootScope.$broadcast("NotAuthorizedEvent", response);
                             break;
+                        case 500:
+                            $rootScope.$broadcast("ServerErrorEvent", response);
+                            break;
                         default :
                     }
-                    
+
                     return $q.reject(response);
                 }
             };
@@ -147,9 +139,3 @@ function clearUserDetails($scope) {
     $scope.isAdmin = false;
     $scope.isUser = false;
 }
-
-
-
-
-
-

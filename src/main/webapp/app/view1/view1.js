@@ -10,7 +10,6 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ["InfoFactory","InfoService",function(InfoFactory,InfoService) {
+.controller('View1Ctrl', ["InfoFactory",function(InfoFactory) {
   this.msgFromFactory = InfoFactory.getInfo();
-  this.msgFromService = InfoService.getInfo();
 }]);
