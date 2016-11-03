@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,23 +31,24 @@ public class CurrencyRates implements Serializable {
     private Date date;
     @Id
     @JoinColumn(name = "CODE", nullable = false)
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private CurrencyDescription code;
 
     @Column(name = "RATE", nullable = false)
     private double rate;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TIMESTAMP", nullable = false, columnDefinition ="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Date timestamp;
 
-//    @JoinColumn(name = "DESCRIPTION" , nullable = false)
-//    @OneToOne
-//    private CurrencyDescription desc;
     public CurrencyRates() {
     }
 
-    public CurrencyRates(Date date, CurrencyDescription code, double rate) {
+    public CurrencyRates(Date date, CurrencyDescription code, double rate, Date timestamp) {
         this.date = date;
         this.code = code;
         this.rate = rate;
-//        this.desc = desc;
+        this.timestamp = timestamp;
     }
 
     public Date getDate() {
@@ -61,11 +63,12 @@ public class CurrencyRates implements Serializable {
         return code.getId();
     }
 
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
     public double getRate() {
         return rate;
     }
-//
-//    public CurrencyDescription getDesc() {
-//        return desc;
-//    }
+
 }

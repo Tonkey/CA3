@@ -22,7 +22,7 @@ public class ExchangeRateManager implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        scheduler.scheduleAtFixedRate(new ExchangeRates(), 0, 24, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(new ExchangeRates(), 0, 2, TimeUnit.SECONDS);
     }
 
     @Override
