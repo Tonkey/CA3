@@ -19,6 +19,10 @@ public class CurrencyDescription {
     
     public CurrencyDescription(){}
     
+    public CurrencyDescription(String description) {
+        this.description = description;
+    }
+    
     public CurrencyDescription(String id, String description) {
         this.id = id;
         this.description = description;
