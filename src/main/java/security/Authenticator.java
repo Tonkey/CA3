@@ -16,6 +16,7 @@ import facades.UserFacade;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -36,11 +37,11 @@ public class Authenticator {
         //String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
         String issuer = "semester3demo-cphbusiness.dk-computerScience";
         // Generate random 256-bit (32-byte) shared secret
-        SecureRandom random = new SecureRandom();
-        Secret.SHARED_SECRET = new byte[32];
-        random.nextBytes(Secret.SHARED_SECRET);
-
-        JWSSigner signer = new MACSigner(Secret.SHARED_SECRET);
+      //  SecureRandom random = new SecureRandom();
+       // Secret.SHARED_SECRET = new byte[32];
+       // random.nextBytes(Secret.SHARED_SECRET);
+        
+        JWSSigner signer = new MACSigner(Secret.getSecret());
         Date date = new Date();
 
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
