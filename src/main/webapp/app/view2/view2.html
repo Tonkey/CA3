@@ -23,25 +23,25 @@
     <h3>test via Postman:</h3>
     <p>if you do not already have postman installed you can use this link: <a href="https://www.getpostman.com/" target="_blank">Postman</a></p>
     <p>
-        Test create user: in postman, chose the POST http verb url: http://localhost:8080/seedMaven/api/login/createUser<br>
+        Test create user: in postman, chose the POST http verb url: /api/login/createUser<br>
         under the header tab you should add Key: Content-Type and Value: application/json<br>
         finally in the body you should add {"userName": "your username!", "passwordHash": "your password!"} please use your own username and password!!!<br>
         if you recieve status 201 the request was successful, and you can now login with the user!
     </p>
-    <p>Test login: in postman, chose the POST http verb url: http://localhost:8080/seedMaven/api/login<br>
+    <p>Test login: in postman, chose the POST http verb url: /api/login<br>
         under the header tab you should add Key: Content-Type and value: application/json<br>
         finally in the body you should add {"username":"user","password":"test"} or your own created user!!!<br>
         if you recieve status 200 and json containing username and token, the request was successful.
     </p>
     <p>
-        Test All Users: in postman, chose the GET http verb url: http://localhost:8080/seedMaven/api/users<br>
+        Test All Users: in postman, chose the GET http verb url: /api/users<br>
         under the header tab you should add Key: Content-Type and Value: application/json<br>
         you will also have to login(see test login) with the admin user and get the returned token!<br>
         when you have the authorization token: you need the add Key: Authorization value: the token you got from the previous step!<br>
         if you recieve status 200 and json containing a list of usernames the request was successful.
     </p>
     <p>
-        Test Delete user: in postman, chose the DELETE http verb url http://localhost:8080/seedMaven/api/users<br>
+        Test Delete user: in postman, chose the DELETE http verb url: /api/users<br>
         under the header tab you should add Key: Content-Type and Value: application/json<br>
         you will also have to login(see test login) with the admin user and get the returned token!<br>
         when you have the authorization token: you need the add Key: Authorization value: the token you got from the previous step!<br>
@@ -51,7 +51,7 @@
     <p>Michael please either write the postman for user functions yourself or msg me when the rest is done!</p>
     
     <h3>How to use:</h3>
-    <p>first go to: <a href="http://localhost:8080/seedMaven/#/view1" target="_blank">not the right link!</a><br>
+    <p>first go to: <a href="#/view1" target="_blank">Home!</a><br>
         then you can either login with one of the following:<br>
         Username: user, Password: test, Role:User<br>
         Username: admin, Password: test, Role:Admin<br>

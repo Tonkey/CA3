@@ -115,7 +115,7 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
         try {
             
             SignedJWT signedJWT = SignedJWT.parse(token);
-            JWSVerifier verifier = new MACVerifier(Secret.SHARED_SECRET);
+            JWSVerifier verifier = new MACVerifier(Secret.getSecret());
 
             if (signedJWT.verify(verifier)) {
                 return new Date().getTime() > signedJWT.getJWTClaimsSet().getExpirationTime().getTime();
@@ -131,7 +131,7 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
     private String getUsernameFromToken(String token) throws ParseException, JOSEException {
 
         SignedJWT signedJWT = SignedJWT.parse(token);
-        JWSVerifier verifier = new MACVerifier(Secret.SHARED_SECRET);
+        JWSVerifier verifier = new MACVerifier(Secret.getSecret());
 
         if (signedJWT.verify(verifier)) {
             return signedJWT.getJWTClaimsSet().getSubject();
