@@ -12,7 +12,7 @@ public interface ICurencyRatesFacade {
     
     public boolean updateDailyCurrencies(List<CurrencyRates> dailyCurrencies);
     
-    public List<CurrencyRates> getDaílyCurrencyRates(Date date);
+    public List<CurrencyRates> getDailyCurrencyRates();
     
     public List<CurrencyRates> getSpecificCurrencyRates(Date startDate, Date endDate);
     
