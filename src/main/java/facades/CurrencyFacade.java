@@ -1,14 +1,14 @@
 package facades;
 
-import static com.google.common.base.Predicates.instanceOf;
 import entity.CurrencyRates;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
+import javax.persistence.Query;
 import security.ICurencyRatesFacade;
 
 /**
@@ -69,8 +69,30 @@ public class CurrencyFacade implements ICurencyRatesFacade{
     }
 
     @Override
-    public List<CurrencyRates> getDaílyCurrencyRates(Date date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<CurrencyRates> getDailyCurrencyRates() {
+        System.out.println("så kom vi så langt ....");
+        EntityManager em = getEntityManager();
+        List<CurrencyRates> rates = new ArrayList<CurrencyRates>();
+        
+        try {
+   
+            em.getTransaction().begin();
+            
+            Query q =  em.createQuery("SELECT u from CurrencyRates u");
+          
+            rates = (ArrayList<CurrencyRates>) q.getResultList();
+                    
+            em.getTransaction().commit();
+
+            return rates;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+        
+        
     }
 
     @Override
