@@ -6,7 +6,7 @@
         </tr>
         <tr ng-repeat="user in users">
             <td>{{user.userName}}</td>
-            <td><button ng-click="deleteUser(user)">Delete User</button></td>
+            <td><button ng-click="deleteUser(user)" ng-hide="doShow(user.userName) === false">Delete User</button></td>
         </tr>
     </table>
 </div>

@@ -1,4 +1,72 @@
-<p>This is the partial for view 2.</p>
+<h1>Authors</h1>
 <div>
-  <p>Data from server (Users ONLY) <b style="color: darkblue">{{data}}</b></p>
+    <h3>Nicolaj Cornelis:</h3>
+    <p>Study Points: Max</p>
+    <p>cleaned out in api End points, changed error modal in Auth.js, Angular for CVRSearch, XML reader, fixed same-origin issue, JPA for currency Rates/Description</p>
+</div>
+<div>
+    <h3>Michael Larsen:</h3>    
+    <p>Study Points: Max</p>
+    <p>created everything concerning user role restricted functions</p>
+</div>
+<div>
+    <h3>Nicklas Molving:</h3>
+    <p>Study Points: Max</p>
+    <p>cleaned out in api End points, created sign-up, created admin functions(getUsers/delete), JPA for currency Rates/Description</p>
+</div>
+<h1>Automated Test</h1>
+<div>
+    <p>Michael please write this when the tests are done!</p>
+</div>
+<h1>How to test the system</h1>
+<div>
+    <h3>test via Postman:</h3>
+    <p>if you do not already have postman installed you can use this link: <a href="https://www.getpostman.com/" target="_blank">Postman</a></p>
+    <p>
+        Test create user: in postman, chose the POST http verb url: http://localhost:8080/seedMaven/api/login/createUser<br>
+        under the header tab you should add Key: Content-Type and Value: application/json<br>
+        finally in the body you should add {"userName": "your username!", "passwordHash": "your password!"} please use your own username and password!!!<br>
+        if you recieve status 201 the request was successful, and you can now login with the user!
+    </p>
+    <p>Test login: in postman, chose the POST http verb url: http://localhost:8080/seedMaven/api/login<br>
+        under the header tab you should add Key: Content-Type and value: application/json<br>
+        finally in the body you should add {"username":"user","password":"test"} or your own created user!!!<br>
+        if you recieve status 200 and json containing username and token, the request was successful.
+    </p>
+    <p>
+        Test All Users: in postman, chose the GET http verb url: http://localhost:8080/seedMaven/api/users<br>
+        under the header tab you should add Key: Content-Type and Value: application/json<br>
+        you will also have to login(see test login) with the admin user and get the returned token!<br>
+        when you have the authorization token: you need the add Key: Authorization value: the token you got from the previous step!<br>
+        if you recieve status 200 and json containing a list of usernames the request was successful.
+    </p>
+    <p>
+        Test Delete user: in postman, chose the DELETE http verb url http://localhost:8080/seedMaven/api/users<br>
+        under the header tab you should add Key: Content-Type and Value: application/json<br>
+        you will also have to login(see test login) with the admin user and get the returned token!<br>
+        when you have the authorization token: you need the add Key: Authorization value: the token you got from the previous step!<br>
+        finally in the body you should add {"username":"the user you want to delete!"}, please do not use admin,user or user_admin :)<br>
+        if you recieve status 200 the request was completed and the user deleted!
+    </p>
+    <p>Michael please either write the postman for user functions yourself or msg me when the rest is done!</p>
+    
+    <h3>How to use:</h3>
+    <p>first go to: <a href="http://localhost:8080/seedMaven/#/view1" target="_blank">not the right link!</a><br>
+        then you can either login with one of the following:<br>
+        Username: user, Password: test, Role:User<br>
+        Username: admin, Password: test, Role:Admin<br>
+        Username: user_admin, Password: test, Role:User and Admin<br>
+        or you can create your own user by clicking on the sign-up link in the right corner,<br>
+        this user will however only have the user role!
+    </p>
+    <p>
+        When you are logged in as a user, you should see two new tabs in the navbar!, "Company Info" and "Exchange Rate Info"<br>
+        MICHAEL PLEASE WRITE A HOW TO DEMO HERE!!!!!
+    </p>
+    <p>
+        When you are logged in as a admin, you should see a new tab called "All Users"<br>
+        when you enter this new tab, you will be presented with a table that shows all the users currently in the database as well as the option to delete this!<br>
+        obs! you will not be able to delete the 3 standard users: "user", "admin" and "user_admin"!
+    </p>
+    
 </div>

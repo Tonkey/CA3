@@ -23,7 +23,29 @@ angular.module('myApp.services', [])
                         failure(response);
 
                     });
-                }
+                };
 
 
+            }])
+        .service('deleteUserService', ['$http', function ($http) {
+
+                this.deleteUser = function (user, list) {
+                    var index = list.indexOf(user);
+                    $http({
+                        url: 'api/users',
+                        method: 'DELETE',
+                        data: {
+                            userName: user.userName
+                        },
+                        headers: {
+                            "Content-Type": "application/json;charset=utf-8"
+                        }
+                    }).then(function (res) {
+                        console.log(res.data);
+                        list.splice(index, 1);
+                    }, function (error) {
+                        console.log(error);
+                    });
+                };
             }]);
+        

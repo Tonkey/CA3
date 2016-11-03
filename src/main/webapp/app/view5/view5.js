@@ -10,11 +10,11 @@ angular.module('myApp.view5', ['ngRoute'])
                 });
             }])
 
-        .controller('View5Ctrl', function ($http, $scope, $location) {
+        .controller('View5Ctrl', function ($http, $scope, deleteUserService) {
 
 
-            this.getUsers = function () {
-
+            var getUsers = function () {
+                
                 $http({
                     method: 'GET',
                     url: 'api/users'
@@ -26,28 +26,23 @@ angular.module('myApp.view5', ['ngRoute'])
                 });
 
             };
-            this.getUsers();
+            getUsers();
 
             $scope.deleteUser = function (user) {
-                console.log(user);
-                var index = $scope.users.indexOf(user);
-                $http({
-                    url: 'api/users',
-                    method: 'DELETE',
-                    data: {
-                        userName: user.userName
-                    },
-                    headers: {
-                        "Content-Type": "application/json;charset=utf-8"
-                    }
-                }).then(function (res) {
-                    console.log(res.data);
+                
+                deleteUserService.deleteUser(user,$scope.users);
                     
-                    $scope.users.splice(index,1);
-                }, function (error) {
-                    console.log(error);
-                });
-
-
+            };
+            
+            $scope.doShow = function (username){
+                switch (username){
+                    case "user":
+                        return false;
+                    case "admin":
+                        return false;
+                    case "user_admin":
+                        return false;
+                    default: return true;
+                }
             };
         });
