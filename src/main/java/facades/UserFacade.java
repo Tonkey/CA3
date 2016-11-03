@@ -3,7 +3,6 @@ package facades;
 import entity.Role;
 import security.IUserFacade;
 import entity.User;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,11 +73,10 @@ public class UserFacade implements IUserFacade {
     public List<User> getAllUsers() {
         EntityManager em = getEntityManager();
         try {
-            List<User> users;
-
             em.getTransaction().begin();
-            Query q = em.createQuery("SELECT u FROM SEED_USER u", User.class);
-            users = q.getResultList();
+            Query q = em.createQuery("SELECT NEW entity.User(u.userName) FROM SEED_USER u");
+            List<User> users = q.getResultList();
+            
             em.getTransaction().commit();
 
             return users;

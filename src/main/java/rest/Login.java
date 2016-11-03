@@ -42,8 +42,6 @@ public class Login {
 
                 if ((roles = Authenticator.authenticate(username, password)) != null) {
 
-                    System.out.println("2");
-
                     String token = Authenticator.createToken(username, roles);
                     responseJson.addProperty("username", username);
                     responseJson.addProperty("token", token);
