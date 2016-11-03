@@ -23,7 +23,6 @@ public class CurrencyRates {
     @GET
     public Object getCurrencyRates() {
         
-        System.out.println("hey there");
         CurrencyFacade currencyFacade = new CurrencyFacade();
 
         List<entity.CurrencyRates> dailyRates = currencyFacade.getDailyCurrencyRates();

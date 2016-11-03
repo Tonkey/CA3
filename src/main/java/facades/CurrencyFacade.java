@@ -70,17 +70,17 @@ public class CurrencyFacade implements ICurencyRatesFacade{
 
     @Override
     public List<CurrencyRates> getDailyCurrencyRates() {
-        System.out.println("så kom vi så langt ....");
         EntityManager em = getEntityManager();
         List<CurrencyRates> rates = new ArrayList<CurrencyRates>();
         
+        Date date = new Date();
         try {
    
             em.getTransaction().begin();
             
-            Query q =  em.createQuery("SELECT u from CurrencyRates u");
+            Query q =  em.createQuery("SELECT u from CurrencyRates u WHERE u.date = :date").setParameter("date", date);
           
-            rates = (ArrayList<CurrencyRates>) q.getResultList();
+            rates =  q.getResultList();
                     
             em.getTransaction().commit();
 

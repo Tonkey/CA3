@@ -31,14 +31,14 @@ public class CurrencyRates implements Serializable {
     private Date date;
     @Id
     @JoinColumn(name = "CODE", nullable = false)
-    @OneToOne(cascade=CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private CurrencyDescription code;
 
     @Column(name = "RATE", nullable = false)
     private double rate;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "TIMESTAMP", nullable = false, columnDefinition ="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name = "TIMESTAMP", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date timestamp;
 
     public CurrencyRates() {
