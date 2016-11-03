@@ -9,7 +9,7 @@ angular.module("myApp.registration", ['ngRoute'])
                 });
             }])
 
-        .controller('RegistrationCtrl', function ($http, $scope) {
+        .controller('RegistrationCtrl', function ($http, $scope, $location) {
 
 
 
@@ -24,6 +24,7 @@ angular.module("myApp.registration", ['ngRoute'])
                 }).then(function successCallback(response) {
 
                     console.log(response);
+                    $location.path('#/view1');
 
                 }, function errorCallback(response) {
 

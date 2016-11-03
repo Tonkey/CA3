@@ -1,1 +1,12 @@
-{{users}}
+<div>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="user in users">
+            <td>{{user.userName}}</td>
+            <td><button ng-click="deleteUser(user)">Delete User</button></td>
+        </tr>
+    </table>
+</div>
