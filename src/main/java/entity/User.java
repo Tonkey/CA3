@@ -25,7 +25,7 @@ public class User implements IUser, Serializable {
 
     public User(String userName, String password) throws PasswordStorage.CannotPerformOperationException {
         this.userName = userName;
-        this.passwordHash = PasswordStorage.createHash(password);
+        this.passwordHash = password;
     }
 
     public User(String userName) {
@@ -63,7 +63,6 @@ public class User implements IUser, Serializable {
     }
 
     public void setPassword(String password) throws PasswordStorage.CannotPerformOperationException {
-        System.out.println("set password");
         this.passwordHash = PasswordStorage.createHash(password);
     }
 

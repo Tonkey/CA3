@@ -33,6 +33,10 @@ public class makeTestUsers {
                 both.addRole(userRole);
                 both.addRole(adminRole);
 
+                user.setPassword(user.getPassword());
+                admin.setPassword(admin.getPassword());
+                both.setPassword(both.getPassword());
+                
                 em.persist(userRole);
                 em.persist(adminRole);
                 em.persist(user);
