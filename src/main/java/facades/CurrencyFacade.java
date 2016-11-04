@@ -19,8 +19,8 @@ public class CurrencyFacade implements ICurencyRatesFacade{
 
     EntityManagerFactory emf;
 
-    public CurrencyFacade() {
-        emf = Persistence.createEntityManagerFactory("pu_development");
+    public CurrencyFacade(EntityManagerFactory emf) {
+        this.emf = emf;
     }
 
     private EntityManager getEntityManager() {
@@ -69,11 +69,10 @@ public class CurrencyFacade implements ICurencyRatesFacade{
     }
 
     @Override
-    public List<CurrencyRates> getDailyCurrencyRates() {
+    public List<CurrencyRates> getDailyCurrencyRates(Date date) {
         EntityManager em = getEntityManager();
         List<CurrencyRates> rates = new ArrayList<CurrencyRates>();
         
-        Date date = new Date();
         try {
    
             em.getTransaction().begin();

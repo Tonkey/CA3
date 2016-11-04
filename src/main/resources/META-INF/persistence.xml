@@ -16,4 +16,20 @@
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
+  <persistence-unit name="PU_TEST" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>entity.CurrencyDescription</class>
+    <class>entity.CurrencyRates</class>
+    <class>entity.Role</class>
+    <class>entity.User</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:target/CA3DBTEST;create=true"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.user" value="ca3"/>
+      <property name="javax.persistence.jdbc.password" value="Test1234"/>
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="test"/>
+    </properties>
+  </persistence-unit>
 </persistence>

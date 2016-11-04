@@ -5,6 +5,8 @@ import entity.Role;
 import entity.User;
 import facades.UserFacade;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -15,7 +17,10 @@ public class makeTestUsers {
     //Only for initial testing REMOVE BEFORE PRODUCTION
     //Run this file to setup the users required to use the initial version of the seed
     public static void main(String[] args) {
-        EntityManager em = Persistence.createEntityManagerFactory("pu_development").createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory("PU_TEST").createEntityManager();
+            Map<String, String> prorperties = new HashMap();
+//        prorperties.put("javax.persistence.sql-load-script-source", "SQL/populate.sql");        
+        Persistence.generateSchema("PU_TEST", prorperties);
         try {
             System.out.println("Creating TEST Users");
 

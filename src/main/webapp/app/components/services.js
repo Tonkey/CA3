@@ -45,15 +45,5 @@ angular.module('myApp.services', [])
 
                     });
                 };
-            }])
-        
-        .service('valutaConverterService', [function () {
-                
-                this.convertValuta = function(amountToConvert, valutaOne , valutaTwo) {
-                    
-                    
-                    
-                }
-                
             }]);
         
