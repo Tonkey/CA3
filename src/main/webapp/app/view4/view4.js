@@ -8,7 +8,7 @@ angular.module('myApp.view4', ['ngRoute'])
                     controller: 'View4Ctrl'
                 });
             }])
-        .controller('View4Ctrl', function ($http, $scope, valutaConverterService) {
+        .controller('View4Ctrl', function ($http, $scope) {
 
             $scope.getRatesForToday = function () {
 
@@ -18,23 +18,34 @@ angular.module('myApp.view4', ['ngRoute'])
                 }).then(function (res) {
 
                     $scope.dailyCurrencies = res.data;
-                    $scope.valutaO = "GBR";
                     console.log(res);
-                    console.log($scope.valutaOne);
+                    var sortedValuta = [];
+                    angular.forEach($scope.dailyCurrencies, function (value, key) {
+                        this.push({
+                            "code": value.code.id,
+                            "desc": value.code.description,
+                            "rate": value.rate
+                        });
+                    }, sortedValuta);
+                    $scope.valutaArray = sortedValuta;
                 }, function (error) {
 
                 });
 
             }
 
+            $scope.calculateValuta = function (a, b) {
+                if (b === null || a === null) {
 
+                    $scope.valutaDescription = "-- choose a valuta --";
+                    $scope.result = 0;
+
+                } else {
+                    $scope.valutaDescription = b.desc;
+                    $scope.result = b.rate * a / 100;
+                }
+            }
 
             $scope.getRatesForToday();
-            $scope.valutaValue = $scope.valutaToCalculate;
-//            $scope.valutaValue = $valutaConverterService.convertValuta($scope.valutaToCalculate , $scope.valutaOne, $scope.valutaTwo);
-
-
-
-
 
         });
