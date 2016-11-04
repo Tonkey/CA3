@@ -31,7 +31,7 @@ public class User implements IUser, Serializable {
     public User(String userName) {
         this.userName = userName;
     }
-
+  
     public void addRole(Role role) {
         if (roles == null) {
             roles = new ArrayList();
