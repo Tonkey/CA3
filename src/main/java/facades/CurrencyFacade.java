@@ -69,11 +69,10 @@ public class CurrencyFacade implements ICurencyRatesFacade{
     }
 
     @Override
-    public List<CurrencyRates> getDailyCurrencyRates() {
+    public List<CurrencyRates> getDailyCurrencyRates(Date date) {
         EntityManager em = getEntityManager();
         List<CurrencyRates> rates = new ArrayList<CurrencyRates>();
         
-        Date date = new Date();
         try {
    
             em.getTransaction().begin();

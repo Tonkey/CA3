@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import facades.CurrencyFacade;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -22,13 +23,14 @@ public class CurrencyRates {
 
     @GET
     public Object getCurrencyRates() {
-        
+
         CurrencyFacade currencyFacade = new CurrencyFacade();
 
-        List<entity.CurrencyRates> dailyRates = currencyFacade.getDailyCurrencyRates();
+        Date date = new Date();
+        List<entity.CurrencyRates> dailyRates = currencyFacade.getDailyCurrencyRates(date);
 
         return new Gson().toJson(dailyRates);
-        
+
     }
-    
+
 }
