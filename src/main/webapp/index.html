@@ -58,6 +58,7 @@
                         </ul>
                         <div>
                             <form class="navbar-form navbar-right" role="form" ng-show="!isAuthenticated" ng-submit="login()"  >
+                                
                                 <div class="form-group">
                                     <input type="text" style="width:10em;" placeholder="User name" class="form-control"
                                            ng-model="user.username">
@@ -90,15 +91,15 @@
         </div>
 
         <script type="text/ng-template" id="errorModal.html">
-                            <div class="modal-header">
-                            <h3 class="modal-title">Error!</h3>
-                            </div>
-                            <div class="modal-body">
-                            <p>{{error}}</p>
-                            </div>
-                            <div class="modal-footer">
-                            <button class="btn btn-primary" type="button" ng-click="ok()" autofocus>OK</button>
-                            </div>
+            <div class="modal-header">
+            <h3 class="modal-title">Error!</h3>
+            </div>
+            <div class="modal-body">
+            <p>{{error}}</p>
+            </div>
+            <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()" autofocus>OK</button>
+            </div>
         </script>
 
     </body>
