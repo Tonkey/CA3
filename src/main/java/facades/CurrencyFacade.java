@@ -19,8 +19,8 @@ public class CurrencyFacade implements ICurencyRatesFacade{
 
     EntityManagerFactory emf;
 
-    public CurrencyFacade() {
-        emf = Persistence.createEntityManagerFactory("pu_development");
+    public CurrencyFacade(EntityManagerFactory emf) {
+        this.emf = emf;
     }
 
     private EntityManager getEntityManager() {

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -50,9 +51,6 @@ public class CurrencyTest {
 
     @BeforeClass
     public static void setUpClass() {
-        exchangeRates = new ExchangeRates();
-        currencyFacade = new CurrencyFacade();
-        scheduler = Executors.newScheduledThreadPool(1);
     }
 
     @AfterClass
@@ -61,6 +59,9 @@ public class CurrencyTest {
 
     @Before
     public void setUp() {
+        this.exchangeRates = new ExchangeRates();
+        this.currencyFacade = new CurrencyFacade(Persistence.createEntityManagerFactory("pu_development"));
+        this.scheduler = Executors.newScheduledThreadPool(1);
     }
 
     @After

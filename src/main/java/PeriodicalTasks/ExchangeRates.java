@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.persistence.Persistence;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -50,7 +51,7 @@ public class ExchangeRates extends DefaultHandler implements Runnable {
 
     public boolean updateExchangeRates() {
 
-        CurrencyFacade currencyFacade = new CurrencyFacade();
+        CurrencyFacade currencyFacade = new CurrencyFacade(Persistence.createEntityManagerFactory("pu_development"));
 
         try {
 
