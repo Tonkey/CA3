@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package test;
 
 import PeriodicalTasks.ExchangeRates;
@@ -24,8 +19,6 @@ import java.util.logging.Logger;
 import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,35 +41,36 @@ public class CurrencyTest {
     private static CurrencyFacade currencyFacade;
     private static ScheduledExecutorService scheduler;
     private static int count = 0;
+    private static Date currentDate;
+    private static List<CurrencyRates> serverCalledList;
+    private static List<CurrencyRates> databaseCalledList;
 
     @BeforeClass
     public static void setUpClass() {
+        currencyFacade = new CurrencyFacade(Persistence.createEntityManagerFactory("pu_development"));
+        exchangeRates = new ExchangeRates(currencyFacade);
     }
 
     @AfterClass
     public static void tearDownClass() {
+        scheduler.shutdownNow();
     }
 
     @Before
     public void setUp() {
-        this.exchangeRates = new ExchangeRates();
-        this.currencyFacade = new CurrencyFacade(Persistence.createEntityManagerFactory("pu_development"));
         this.scheduler = Executors.newScheduledThreadPool(1);
+        this.currentDate = new Date();
+        this.serverCalledList = new ArrayList();
+        this.databaseCalledList = new ArrayList();
     }
 
     @After
     public void tearDown() {
-        scheduler.shutdownNow();
     }
 
     @Test
-    public void testServercallForExchangerates() {
-
-        List<CurrencyRates> serverCalledList = new ArrayList<CurrencyRates>();
-        List<CurrencyRates> databaseCalledList = new ArrayList<CurrencyRates>();
-        Date now = new Date();
-
-        System.out.println("Starting Currency Test no. 1.1- servercall checking the input stream returns bytes ... ");
+    public void testServerCall() {
+        System.out.println("Starting Currency Test no. 1 - 'Server to servercall' - checking costum connection to server - input stream returns bytes ... ");
         try {
             URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
             URLConnection connection = url.openConnection();
@@ -89,58 +83,34 @@ public class CurrencyTest {
         } catch (Exception e) {
 
         }
+        System.out.println("Test no. 1 - 'Server to servercall' - finished. ");
+    }
 
-        System.out.println("Starting Currency Test no. 1.2- servercall to get XML with daily Valuta exchange rates");
+    @Test
+    public void testServercallForExchangerates() {
+
+        System.out.println("Starting Currency Test no. 2 - 'Compare data' ...");
+        
+        System.out.println("Starting Currency Test no. 2.1 - Checking programs servercall to get XML with daily Valuta exchange rates");
         assertTrue(exchangeRates.updateExchangeRates());
 
-        System.out.println("Test no. 1 - Servercall - finished ... ");
-
-        try {
-
-            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
-            URLConnection connection = url.openConnection();
-
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document document = docBuilder.parse(connection.getInputStream());
-
-            TransformerFactory transformerfactory = TransformerFactory.newInstance();
-            Transformer xform = transformerfactory.newTransformer();
-
-            NodeList currencyNodeList = document.getElementsByTagName("currency");
-
-            for (int i = 0, size = currencyNodeList.getLength(); i < size; i++) {
-
-                serverCalledList.add(new CurrencyRates(now,
-                        new CurrencyDescription(currencyNodeList.item(i).getAttributes().getNamedItem("code").getNodeValue(),
-                                currencyNodeList.item(i).getAttributes().getNamedItem("desc").getNodeValue()),
-                        checkRate(currencyNodeList.item(i).getAttributes().getNamedItem("rate").getNodeValue()), now));
-
-            }
-        } catch (Exception e) {
-        }
-
-        databaseCalledList = currencyFacade.getDailyCurrencyRates(now);
-
-        System.out.println("Starting Currency Test no. 2 - matching object from servercall with object from Database call");
-        System.out.println("Test no. 2.1 - Comparing length of the lists from server and database call ...");
-
+        databaseCalledList = currencyFacade.getDailyCurrencyRates(currentDate);
+        setUpServerCalledList();
+        
+        System.out.println("Test no. 2.2 - Comparing length of the lists from server and database call ...");
         assertEquals(serverCalledList.size(), databaseCalledList.size());
-        System.out.println("Test no. 2.2 - Comparing different codes from the two lists ...");
+
+        System.out.println("Test no. 2.3 - Comparing different codes from the two lists ...");
         for (int i = 0; i < serverCalledList.size(); i++) {
             assertEquals(serverCalledList.get(i).getCode(), databaseCalledList.get(i).getCode());
         }
-        System.out.println("Test no. 2.3 - Comparing different rates from the two lists ...");
-        for (int i = 0; i < serverCalledList.size(); i++) {
-            double alpha = serverCalledList.get(i).getRate();
-            double betha = databaseCalledList.get(i).getRate();
-            double delta = 0.1;
-            assertEquals(alpha, betha, delta);
-        }
 
-        System.out.println("Test no. 2 - Database call - finished ...");
+        System.out.println("Test no. 2 - 'Compare data' - finished.");
+    }
 
-        System.out.println("Starting Currency Test no. 3 - Testing Scheduler");
+    @Test
+    public void testScheduler() {
+        System.out.println("Starting Currency Test no. 3 - 'Scheduler' ...");
         int expectedValue = 5;
         int delta = 1;
         scheduleTester();
@@ -149,11 +119,32 @@ public class CurrencyTest {
         } catch (InterruptedException ex) {
             Logger.getLogger(CurrencyTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         assertEquals(expectedValue, count, delta);
 
-        System.out.println("Test no. 3 - Scheduler Test - finished ...");
+        System.out.println("Test no. 3 - 'Scheduler' - finished.");
+    }
 
+    public static void setUpServerCalledList() {
+        try {
+            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
+            URLConnection connection = url.openConnection();
+
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document document = docBuilder.parse(connection.getInputStream());
+
+            NodeList currencyNodeList = document.getElementsByTagName("currency");
+
+            for (int i = 0, size = currencyNodeList.getLength(); i < size; i++) {
+
+                serverCalledList.add(new CurrencyRates(currentDate,
+                        new CurrencyDescription(currencyNodeList.item(i).getAttributes().getNamedItem("code").getNodeValue(),
+                                currencyNodeList.item(i).getAttributes().getNamedItem("desc").getNodeValue()),
+                        checkRate(currencyNodeList.item(i).getAttributes().getNamedItem("rate").getNodeValue()), currentDate));
+            }
+        } catch (Exception e) {
+        }
     }
 
     public static void scheduleTester() {
@@ -167,7 +158,7 @@ public class CurrencyTest {
                 = scheduler.scheduleAtFixedRate(scheduledTest, 1, 1, SECONDS);
     }
 
-    private double checkRate(String rateToCheck) {
+    private static double checkRate(String rateToCheck) {
 
         double rate = 0;
         try {
