@@ -1,49 +1,56 @@
-<h1>Daily Currency Exchange rates</h1>
+<div class="container">
+    <h1>Daily Currency Exchange rates</h1>
 
-
-<select class="form-control" data-ng-model="date" style="width: 25%;">
-    <Option value="DK" selected>some date</Option>
-    <Option value="NO">another date</Option>
-</select>
-<div>
-    <div style="width: 40%; background: rgba(100,100,100,0,5);">
-        <br>
-        <br>
-        <button data-ng-disabled="loading" data-ng-click="updateRates()" class="btn btn-default">Update</button>
-        <br>
-        <br>
+    <div>
+        <button data-ng-disabled="loading" data-ng-click="getRatesForToday()" class="btn btn-default">Update</button>
         <button data-ng-disabled="loading" data-ng-click="showRates()" class="btn btn-default">show rates</button>
-        <br>
-        <br>
         <button data-ng-disabled="loading" data-ng-click="createGraphic()" class="btn btn-default">create a graph</button>
-        <br>
-        <br>
-        <header>From date</header>
-        <select class="form-control" data-ng-model="date" style="width: 25%;">
-            <Option value="DK" selected>some date</Option>
-            <Option value="NO">another date</Option>
-        </select>
-        <header>To date</header>
-        <select class="form-control" data-ng-model="date" style="width: 25%;">
-            <Option value="DK" selected>some date</Option>
-            <Option value="NO">another date</Option>
-        </select>
-        <br>
-        <br>
     </div>
-    <div style="width: 60%; background: rgba(300,300,100,0,5);">
-        ehhje
+
+    <div style="text-align: center;">
+        <header> amount to convert </header>
+        <input data-ng-model="valutaToCalculate" type="number" class="form-control" style="width: 50%; margin-left: 25%; margin-right: auto; margin-bottom: 10px;">
+        <select data-ng-model="valutaOne" ng-options="id.code.id for id in dailyCurrencies"></select>
+        <select data-ng-model="valutaO" ng-options="currency.code.id for currency in dailyCurrencies"></select>
+        
+        <select data-ng-model="valutaTwo" ng-options="id.code.id for id in dailyCurrencies"></select>
+        <div style="width: 50%; margin-left: 25%; margin-right: auto; height: 80px; background-color: whitesmoke; margin-bottom: 50px; margin-top: 10px; line-height: 80px; font-size: xx-large; font-family: italic; font-weight: bold; color: black; border-radius: 10px;">
+            {{valutaValue}}
+        </div>
+        
     </div>
-</div>
-<div>
-    <uib-accordion>
-        <uib-accordion-group heading="exchangerate for : some date" >
-            {{::rates}}     
-        </uib-accordion-group>
-    </uib-accordion>
-    <uib-accordion>
-        <uib-accordion-group heading="exchangerate for : some other date" >
-            {{::rates}}     
-        </uib-accordion-group>
-    </uib-accordion>
+
+
+    <div>
+        <table class="table table-striped table-condensed">
+
+            <tr>
+                <th>Currency</th>
+                <th>Code</th>
+                <th>Rate</th>
+                <th>Timestamp</th>
+            </tr>
+
+            <tr data-ng-repeat="currency in dailyCurrencies">
+
+                <td>
+                    {{::currency.code.id}}
+                </td>
+
+                <td>
+                    {{::currency.code.description}}
+                </td>
+
+                <td>
+                    {{::currency.rate}}
+                </td>
+
+                <td>
+                    {{::currency.timestamp}}
+                </td>
+
+            </tr>
+
+        </table>
+    </div>
 </div>

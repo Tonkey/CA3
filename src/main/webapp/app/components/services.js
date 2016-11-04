@@ -27,6 +27,7 @@ angular.module('myApp.services', [])
 
 
             }])
+        
         .service('deleteUserService', ['$http', function ($http) {
 
                 this.deleteUser = function (user, list) {
@@ -36,16 +37,23 @@ angular.module('myApp.services', [])
                         method: 'DELETE',
                         data: {
                             userName: user.userName
-                        },
-                        headers: {
-                            "Content-Type": "application/json;charset=utf-8"
                         }
                     }).then(function (res) {
-                        console.log(res.data);
+
                         list.splice(index, 1);
                     }, function (error) {
-                        console.log(error);
+
                     });
                 };
+            }])
+        
+        .service('valutaConverterService', [function () {
+                
+                this.convertValuta = function(amountToConvert, valutaOne , valutaTwo) {
+                    
+                    
+                    
+                }
+                
             }]);
         
