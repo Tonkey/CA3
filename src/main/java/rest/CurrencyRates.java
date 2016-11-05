@@ -5,7 +5,6 @@ import facades.CurrencyFacade;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

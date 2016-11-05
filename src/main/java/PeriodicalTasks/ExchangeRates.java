@@ -2,27 +2,19 @@ package PeriodicalTasks;
 
 import entity.CurrencyDescription;
 import entity.CurrencyRates;
-
 import facades.CurrencyFacade;
-
 import java.io.IOException;
-
 import org.xml.sax.helpers.*;
 import org.xml.sax.SAXException;
-
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.MalformedURLException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Persistence;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 

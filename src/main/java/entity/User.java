@@ -70,5 +70,4 @@ public class User implements IUser, Serializable {
     public String getUserName() {
         return userName;
     }
-
 }

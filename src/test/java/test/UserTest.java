@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package test;
 
 import com.google.gson.Gson;
@@ -13,11 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -25,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import security.PasswordStorage;
 
 /**
  *
@@ -51,7 +42,6 @@ public class UserTest {
 
     @AfterClass
     public static void tearDownClass() {
-//        tearDownDatabase();
     }
 
     @Before
@@ -125,9 +115,7 @@ public class UserTest {
             em.persist(admin);
             em.persist(user);
             em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        } catch (Exception e) {} finally {
             em.close();
         }
     }

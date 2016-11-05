@@ -4,13 +4,19 @@
     <div>
         <button data-ng-disabled="loading" data-ng-click="getRatesForToday()" class="btn btn-default">Update</button>
     </div>
-
+    <br>
     <div style="text-align: center;">
         <header> amount to convert </header>
-        <input data-ng-model="values.first" ng-change="calculateValuta(values.first, valutaOne)" type="number" class="form-control" style="width: 50%; margin-left: 25%; margin-right: auto; margin-bottom: 10px;">
-        <select ng-change="calculateValuta(values.first, valutaOne)" data-ng-model="valutaOne" ng-options="code as code.code for code in valutaArray track by code.code"></select>
-        {{valutaDescription}}
-
+        <div class="form-group" style="text-align: center;">
+            <div class="input-group input-group-sm">
+                <input data-ng-model="values.first" ng-change="calculateValuta(values.first, valutaOne)" type="number" class="form-control" style="height: 50px;">
+                <span class="input-group-addon" style="width: 20%; height: 50px;">
+                    <select ng-change="calculateValuta(values.first, valutaOne)" data-ng-model="valutaOne" ng-options="code as code.code for code in valutaArray track by code.code">
+                    </select>
+                    {{valutaDescription}}
+                </span>
+            </div>
+        </div>
 
         <div  style="width: 50%; margin-left: 25%; margin-right: auto; height: 80px; background-color: whitesmoke; margin-bottom: 50px; margin-top: 10px; line-height: 80px; font-size: xx-large; font-family: italic; font-weight: bold; color: black; border-radius: 10px;">
             {{result}} DKR

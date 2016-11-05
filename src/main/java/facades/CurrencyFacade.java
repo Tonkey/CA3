@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import security.ICurencyRatesFacade;
@@ -15,9 +14,11 @@ import security.ICurencyRatesFacade;
  *
  * @author Michael
  */
-public class CurrencyFacade implements ICurencyRatesFacade{
+public class CurrencyFacade implements ICurencyRatesFacade {
 
     EntityManagerFactory emf;
+    EntityManager em;
+    List<CurrencyRates> rates;
 
     public CurrencyFacade(EntityManagerFactory emf) {
         this.emf = emf;
@@ -32,31 +33,25 @@ public class CurrencyFacade implements ICurencyRatesFacade{
     @Override
     public boolean updateDailyCurrencies(List<CurrencyRates> dailyCurrencies) {
 
-        EntityManager em = getEntityManager();
-
+        this.em = getEntityManager();
 
         try {
-                em.getTransaction().begin();
+            em.getTransaction().begin();
 
             for (int i = 0; i < dailyCurrencies.size(); i++) {
-        
+
                 em.merge(dailyCurrencies.get(i));
 
             }
-                em.getTransaction().commit();
-                
+            em.getTransaction().commit();
+
         } catch (PersistenceException e) {
-            
-            //if (e instanceof ConstraintViolationException) {
-                
-                e.printStackTrace();
+
+            e.printStackTrace();
             return false;
-            //}
-            
+
         } catch (Exception e) {
-            
-            //if()
-            
+
             e.printStackTrace();
             return false;
 
@@ -70,17 +65,17 @@ public class CurrencyFacade implements ICurencyRatesFacade{
 
     @Override
     public List<CurrencyRates> getDailyCurrencyRates(Date date) {
-        EntityManager em = getEntityManager();
-        List<CurrencyRates> rates = new ArrayList<CurrencyRates>();
-        
+        this.em = getEntityManager();
+        this.rates = new ArrayList();
+
         try {
-   
+
             em.getTransaction().begin();
-            
-            Query q =  em.createQuery("SELECT u from CurrencyRates u WHERE u.date = :date").setParameter("date", date);
-          
-            rates =  q.getResultList();
-                    
+
+            Query q = em.createQuery("SELECT u from CurrencyRates u WHERE u.date = :date").setParameter("date", date);
+
+            rates = q.getResultList();
+
             em.getTransaction().commit();
 
             return rates;
@@ -90,8 +85,6 @@ public class CurrencyFacade implements ICurencyRatesFacade{
         } finally {
             em.close();
         }
-        
-        
     }
 
     @Override
