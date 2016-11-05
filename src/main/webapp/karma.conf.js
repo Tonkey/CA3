@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Aug 21 2014 10:24:39 GMT+0200 (CEST)
+// Generated on Sat Nov 05 2016 16:36:40 GMT+0100 (CET)
 
 module.exports = function(config) {
   config.set({
@@ -10,25 +10,17 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai'],
+    frameworks: ['jasmine'],
 
-    plugins: [
-      'karma-mocha',
-      'karma-chai',
-      'karma-sinon-chai',
-      'karma-chrome-launcher',
-      'karma-phantomjs-launcher',
-      'karma-jquery',
-      'karma-chai-jquery',
-      'karma-mocha-reporter'
-    ],
 
     // list of files / patterns to load in the browser
     files: [
-      'bower/angular/angular.js',
-      'bower/angular-mocks/angular-mocks.js',
-      'dist/angular-jwt.js',
-      'test/unit/**/*.js'
+        'bower_components/angular/angular.min.js',
+        'bower_components/angular-route/angular-route.min.js',
+        'bower_components/angular-jwt/dist/angular-jwt.min.js',
+        'bower_components/angular-animate/angular-animate.min.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+        'app/**/*.js'
     ],
 
 
@@ -46,7 +38,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha'],
+    reporters: ['progress'],
 
 
     // web server port
@@ -68,11 +60,15 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Firefox'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
-  });
-};
+    singleRun: false,
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
+  })
+}

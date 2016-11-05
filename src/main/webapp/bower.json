@@ -1,10 +1,10 @@
 {
-  "name": "AngularSeed for 3. semester Computer Science at cphbusiness",
-  "version": "0.0.0",
+  "name": "CA3",
+  "version": "0.1",
   "authors": [
     "LMO <lam@cphbusiness.dk>"
   ],
-  "description": "Semesterseed for exercises and project",
+  "description": "\"\"",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -14,9 +14,10 @@
   ],
   "dependencies": {
     "angular": "~1.5.2",
-    "angular-route": "^1.5.2",
     "angular-animate": "^1.5.2",
     "angular-bootstrap": "^1.2.5",
-    "angular-jwt": "^0.0.9"
-  }
+    "angular-jwt": "^0.0.9",
+    "angular-route": "^1.5.2"
+  },
+  "main": "index.js"
 }
