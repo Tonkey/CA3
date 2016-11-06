@@ -76,9 +76,14 @@ public class Login {
         //password not hashed here as it uses empty constructor!
         User u = new Gson().fromJson(data, User.class);
 
-        facade.createNewUser(u);
+        String res = facade.createNewUser(u);
 
-        return Response.status(201).header("Location", "#/view1").build();
+        if (res != null) {
+            return Response.status(201).header("Location", "#/view1").build();
+        } else {
+            return Response.status(400).build();
+        }
+
     }
 
 }

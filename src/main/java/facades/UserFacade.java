@@ -62,7 +62,6 @@ public class UserFacade implements IUserFacade {
             em.getTransaction().commit();
             return u.getUserName();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         } finally {
             em.close();

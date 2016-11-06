@@ -11,7 +11,7 @@ angular.module("myApp.registration", ['ngRoute'])
 
         .controller('RegistrationCtrl', function ($http, $scope, $location) {
 
-
+//            $scope.uNameNotAvailable = false;
 
             $scope.registerUser = function () {
                 this.user = {'userName': $scope.username, 'passwordHash': $scope.password};
@@ -22,12 +22,12 @@ angular.module("myApp.registration", ['ngRoute'])
                     url: 'api/login/createUser',
                     data: this.user
                 }).then(function successCallback(response) {
-
                     console.log(response);
                     $location.path('#/view1');
 
                 }, function errorCallback(response) {
-
+                    document.getElementById("usernameField").style.borderColor = "red";
+                    $scope.uNameNotAvailable = true;
                     console.log(response);
 
                 });

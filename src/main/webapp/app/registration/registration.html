@@ -2,9 +2,9 @@
 
 
 <form ng-submit="registerUser()">
-
+    <p ng-show="uNameNotAvailable === true" style="color: red">Username is not valid</p>
 <div class="form-group">
-    <input type="text" style="width:10em;" placeholder="User name" class="form-control"
+    <input id="usernameField" type="text" style="width:10em;" placeholder="User name" class="form-control"
            ng-model="username">
 </div>
 <div class="form-group">
