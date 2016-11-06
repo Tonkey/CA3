@@ -97,10 +97,10 @@ public class CurrencyTest {
         databaseCalledList = currencyFacade.getDailyCurrencyRates(currentDate);
         setUpServerCalledList();
         
-        System.out.println("Test no. 2.2 - Comparing length of the lists from server and database call ...");
+        System.out.println("Test no. 2.2 - 'Comparing lengths' - of the lists from server and database call ...");
         assertEquals(serverCalledList.size(), databaseCalledList.size());
 
-        System.out.println("Test no. 2.3 - Comparing different codes from the two lists ...");
+        System.out.println("Test no. 2.3 - 'Comparing different codes' from the two lists ...");
         for (int i = 0; i < serverCalledList.size(); i++) {
             assertEquals(serverCalledList.get(i).getCode(), databaseCalledList.get(i).getCode());
         }
